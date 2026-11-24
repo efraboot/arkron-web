@@ -1,0 +1,74 @@
+name: Publicar ARKRON en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Descargar el sitio
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Configurar Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Preparar las rutas del sitio
+        env:
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: |
+          node --input-type=module <<'JS'
+          import { execFileSync } from "node:child_process";
+          import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+          import { posix } from "node:path";
+
+          const output = "_site";
+          const base = (process.env.PAGES_BASE_PATH ?? "").replace(/\/+$/, "");
+          const files = execFileSync("git", ["ls-files", "-z", "--", "*.html", "assets/"], { encoding: "utf8" })
+            .split("\0")
+            .filter(Boolean);
+
+          if (!files.includes("index.html")) throw new Error("Missing index.html");
+          const rootAttribute = /\b(href|src|poster)="(\/(?!\/)[^"]*)"/g;
+          const absoluteCssUrl = /url\(\s*(['"]?)(\/(?!\/)[^'"\s)]+)\1\s*\)/g;
+          for (const file of files) {
+            const destination = posix.join(output, file);
+            mkdirSync(posix.dirname(destination), { recursive: true });
+            let content = readFileSync(file);
+            if (file.endsWith(".html")) {
+              content = content.toString("utf8")
+                .replace(rootAttribute, (_, name, url) => name + '="' + base + url + '"')
+                .replace(absoluteCssUrl, (_, quote, url) => "url(" + quote + base + url + quote + ")");
+            } else if (file.endsWith(".css")) {
+              content = content.toString("utf8").replace(absoluteCssUrl, (_, quote, url) => {
+                const relative = posix.relative(posix.dirname(file), url.slice(1));
+                return "url(" + quote + relative + quote + ")";
+              });
+            }
+            writeFileSync(destination, content);
+          }
+          console.log("Prepared " + files.length + " static files for " + (base || "/") + ".");
+          JS
+      - name: Empaquetar el sitio
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
