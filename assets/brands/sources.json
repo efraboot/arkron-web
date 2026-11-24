@@ -1,0 +1,155 @@
+{
+  "microsoft": {
+    "package": "logos",
+    "icon": "microsoft",
+    "source": "https://icon-sets.iconify.design/logos/microsoft/"
+  },
+  "aws": {
+    "package": "logos",
+    "icon": "aws",
+    "source": "https://icon-sets.iconify.design/logos/aws/"
+  },
+  "google-cloud": {
+    "package": "logos",
+    "icon": "google-cloud",
+    "source": "https://icon-sets.iconify.design/logos/google-cloud/"
+  },
+  "dell": {
+    "package": "simple-icons",
+    "icon": "dell",
+    "source": "https://icon-sets.iconify.design/simple-icons/dell/"
+  },
+  "lenovo": {
+    "package": "simple-icons",
+    "icon": "lenovo",
+    "source": "https://icon-sets.iconify.design/simple-icons/lenovo/"
+  },
+  "hp": {
+    "package": "simple-icons",
+    "icon": "hp",
+    "source": "https://icon-sets.iconify.design/simple-icons/hp/"
+  },
+  "intel": {
+    "package": "logos",
+    "icon": "intel",
+    "source": "https://icon-sets.iconify.design/logos/intel/"
+  },
+  "amd": {
+    "package": "logos",
+    "icon": "amd",
+    "source": "https://icon-sets.iconify.design/logos/amd/"
+  },
+  "nvidia": {
+    "package": "logos",
+    "icon": "nvidia",
+    "source": "https://icon-sets.iconify.design/logos/nvidia/"
+  },
+  "cisco": {
+    "package": "simple-icons",
+    "icon": "cisco",
+    "source": "https://icon-sets.iconify.design/simple-icons/cisco/"
+  },
+  "juniper": {
+    "package": "simple-icons",
+    "icon": "junipernetworks",
+    "source": "https://icon-sets.iconify.design/simple-icons/junipernetworks/"
+  },
+  "nutanix": {
+    "package": "simple-icons",
+    "icon": "nutanix",
+    "source": "https://icon-sets.iconify.design/simple-icons/nutanix/"
+  },
+  "vmware": {
+    "package": "logos",
+    "icon": "vmware",
+    "source": "https://icon-sets.iconify.design/logos/vmware/"
+  },
+  "fortinet": {
+    "package": "simple-icons",
+    "icon": "fortinet",
+    "source": "https://icon-sets.iconify.design/simple-icons/fortinet/"
+  },
+  "veeam": {
+    "package": "simple-icons",
+    "icon": "veeam",
+    "source": "https://icon-sets.iconify.design/simple-icons/veeam/"
+  },
+  "ibm": {
+    "package": "logos",
+    "icon": "ibm",
+    "source": "https://icon-sets.iconify.design/logos/ibm/"
+  },
+  "oracle": {
+    "package": "logos",
+    "icon": "oracle",
+    "source": "https://icon-sets.iconify.design/logos/oracle/"
+  },
+  "sap": {
+    "package": "logos",
+    "icon": "sap",
+    "source": "https://icon-sets.iconify.design/logos/sap/"
+  },
+  "red-hat": {
+    "package": "logos",
+    "icon": "redhat",
+    "source": "https://icon-sets.iconify.design/logos/redhat/"
+  },
+  "databricks": {
+    "package": "logos",
+    "icon": "databricks",
+    "source": "https://icon-sets.iconify.design/logos/databricks/"
+  },
+  "adobe": {
+    "package": "logos",
+    "icon": "adobe",
+    "source": "https://icon-sets.iconify.design/logos/adobe/"
+  },
+  "autodesk": {
+    "package": "simple-icons",
+    "icon": "autodesk",
+    "source": "https://icon-sets.iconify.design/simple-icons/autodesk/"
+  },
+  "epson": {
+    "package": "simple-icons",
+    "icon": "epson",
+    "source": "https://icon-sets.iconify.design/simple-icons/epson/"
+  },
+  "zebra": {
+    "package": "simple-icons",
+    "icon": "zebratechnologies",
+    "source": "https://icon-sets.iconify.design/simple-icons/zebratechnologies/"
+  },
+  "palo-alto-networks": {
+    "package": "simple-icons",
+    "icon": "paloaltonetworks",
+    "source": "https://icon-sets.iconify.design/simple-icons/paloaltonetworks/"
+  },
+  "hpe": {
+    "source": "https://commons.wikimedia.org/wiki/File:Hewlett_Packard_Enterprise_logo.svg",
+    "asset": "https://upload.wikimedia.org/wikipedia/commons/4/46/Hewlett_Packard_Enterprise_logo.svg"
+  },
+  "crowdstrike": {
+    "source": "https://commons.wikimedia.org/wiki/File:CrowdStrike_Logo_2023_Secondary_Red.png",
+    "asset": "https://upload.wikimedia.org/wikipedia/commons/6/68/CrowdStrike_Logo_2023_Secondary_Red.png"
+  },
+  "check-point": {
+    "source": "https://www.globenewswire.com/",
+    "asset": "https://ml.globenewswire.com/Resource/Download/60b803b3-dc47-42f3-8792-20f48abcc38a"
+  },
+  "servicenow": {
+    "source": "https://commons.wikimedia.org/wiki/File:ServiceNow_logo.svg",
+    "asset": "https://upload.wikimedia.org/wikipedia/commons/5/57/ServiceNow_logo.svg"
+  },
+  "honeywell": {
+    "source": "https://commons.wikimedia.org/wiki/File:Logo_honeywell.svg",
+    "asset": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Logo_honeywell.svg"
+  },
+  "aruba": {
+    "source": "https://clearpass.arubanetworks.com/",
+    "asset": "https://clearpass.arubanetworks.com/skins/skin-aruba-clearpass/external/hpe_aruba_orange_pos_rgb.png"
+  },
+  "xerox": {
+    "source": "https://www.xerox.com/en-us",
+    "asset": "https://www.xerox.com/assets/images/logos/xerox.svg"
+  }
+}
