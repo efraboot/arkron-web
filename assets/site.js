@@ -292,9 +292,28 @@
     renderCatalog();
   }
 
+  for (const card of document.querySelectorAll('.service-card')) {
+    const detail = card.querySelector('.service-detail');
+    const icon = card.querySelector('.service-icon');
+    const syncExpanded = () => icon.setAttribute('aria-expanded', String(detail.open));
+    detail.addEventListener('toggle', syncExpanded);
+    syncExpanded();
+
+    card.addEventListener('click', event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (icon.contains(target)) {
+        detail.open = !detail.open;
+        return;
+      }
+      if (target.closest('a, button, summary, .service-description') || window.getSelection()?.isCollapsed === false) return;
+      detail.open = !detail.open;
+    });
+  }
+
   function openLinkedService() {
-    const detail = document.querySelector('.service-card:target .service-detail');
-    if (detail) detail.open = true;
+    const card = document.getElementById(window.location.hash.slice(1));
+    if (card?.matches('.service-card')) card.querySelector('.service-detail').open = true;
   }
   window.addEventListener('hashchange', openLinkedService);
   openLinkedService();
@@ -315,40 +334,34 @@
       fields.fabricante.value = manufacturer;
     }
 
-    const result = form.querySelector('.request-result');
-    const summary = form.querySelector('#resumen-solicitud');
     const message = form.querySelector('[data-request-status]');
-    form.addEventListener('submit', event => {
+    const submit = form.querySelector('[type="submit"]');
+    form.addEventListener('submit', async event => {
       event.preventDefault();
-      const details = new FormData(form);
-      const values = [['Nombre', 'nombre'], ['Empresa', 'empresa'], ['Correo', 'correo'], ['Teléfono', 'telefono'], ['Solución o servicio', 'servicio'], ['Fabricante', 'fabricante']];
-      const lines = values.filter(([, key]) => String(details.get(key) || '').trim()).map(([label, key]) => `${label}: ${String(details.get(key)).trim()}`);
-      summary.value = ['Solicitud de cotización | ARKRON', '', ...lines, '', 'Requerimiento', String(details.get('detalle')).trim()].join('\n');
-      result.hidden = false;
-      message.textContent = '';
-      summary.focus();
-    });
-    form.querySelector('[data-copy]').addEventListener('click', async () => {
+      if (submit.disabled) return;
+      submit.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      message.dataset.state = 'pending';
+      message.textContent = 'Enviando solicitud…';
       try {
-        await navigator.clipboard.writeText(summary.value);
-        message.textContent = 'Solicitud copiada.';
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {Accept: 'application/json'},
+          body: new URLSearchParams(new FormData(form)),
+          signal: AbortSignal.timeout(25000),
+        });
+        const result = await response.json();
+        const sent = response.ok && result.ok === true;
+        message.dataset.state = sent ? 'success' : 'error';
+        message.textContent = result.message;
+        if (sent) form.reset();
       } catch {
-        summary.focus();
-        summary.select();
-        message.textContent = 'El texto está seleccionado. Usa la opción Copiar de tu dispositivo.';
+        message.dataset.state = 'error';
+        message.textContent = 'No pudimos confirmar el envío. Puedes escribirnos por WhatsApp o a info@arkron.com.';
+      } finally {
+        form.removeAttribute('aria-busy');
+        submit.disabled = false;
       }
     });
-    form.querySelector('[data-download]').addEventListener('click', () => {
-      const url = URL.createObjectURL(new Blob([summary.value], {type: 'text/plain;charset=utf-8'}));
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'Solicitud-ARKRON.txt';
-      document.body.append(link);
-      link.click();
-      link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      message.textContent = 'Archivo de solicitud preparado.';
-    });
-    form.querySelector('[type="submit"]').disabled = false;
   }
 }());

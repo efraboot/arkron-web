@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="49 42 512 508">
+  <title>Arkron</title>
+  <defs>
+    <linearGradient id="azul" x1="0" y1=".05" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#27c4e1"/>
+      <stop offset="1" stop-color="#1d809b"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#azul)" stroke-width="9">
+    <path d="M93 313h103a111 111 0 0 0 19 49l-71 68
+             M145 279h52a111 111 0 0 1 18-50l-18-19
+             M170 133l69 70a114 114 0 0 1 49-22v-12
+             M323 85v96a114 114 0 0 1 50 22l68-70
+             M421 204l-23 25a113 113 0 0 1 22 50h27
+             M516 313h-96a113 113 0 0 1-20 49l22 23
+             M441 455l-68-68a113 113 0 0 1-50 22v97
+             M288 431v-22a113 113 0 0 1-50-22l-16 15"/>
+    <circle cx="78" cy="313" r="15"/>
+    <circle cx="130" cy="279" r="15"/>
+    <circle cx="186" cy="199" r="15"/>
+    <circle cx="159" cy="122" r="15"/>
+    <circle cx="288" cy="154" r="15"/>
+    <circle cx="323" cy="70" r="15"/>
+    <circle cx="452" cy="122" r="15"/>
+    <circle cx="432" cy="193" r="15"/>
+    <circle cx="462" cy="279" r="15"/>
+    <circle cx="531" cy="313" r="15"/>
+    <circle cx="432" cy="396" r="15"/>
+    <circle cx="452" cy="466" r="15"/>
+    <circle cx="323" cy="521" r="15"/>
+    <circle cx="288" cy="446" r="15"/>
+    <circle cx="211" cy="412" r="15"/>
+    <circle cx="133" cy="441" r="15"/>
+  </g>
+  <path fill="url(#azul)" fill-rule="evenodd" d="M297 199c-48 6-88 49-88 98 0 20 6 37 17 52v-45h53v79c6 3 12 5 18 6V199Zm-70 87c4-28 27-53 52-64v64h-52Zm87-86v190c7 0 12-2 18-4v-70l45 43 13-14-51-50 36-36 7 6 15-3-19-30-46 45v-73c-6-2-12-3-18-4Z"/>
+</svg>

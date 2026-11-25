@@ -1,4 +1,4 @@
-name: Publicar ARKRON en GitHub Pages
+name: Publicar Arkron en GitHub Pages
 
 on:
   push:
@@ -46,6 +46,7 @@ jobs:
 
           if (!files.includes("index.html")) throw new Error("Missing index.html");
           const rootAttribute = /\b(href|src|poster)="(\/(?!\/)[^"]*)"/g;
+          const sourceSet = /\bsrcset="([^"]+)"/g;
           const absoluteCssUrl = /url\(\s*(['"]?)(\/(?!\/)[^'"\s)]+)\1\s*\)/g;
           for (const file of files) {
             const destination = posix.join(output, file);
@@ -54,7 +55,21 @@ jobs:
             if (file.endsWith(".html")) {
               content = content.toString("utf8")
                 .replace(rootAttribute, (_, name, url) => name + '="' + base + url + '"')
+                .replace(sourceSet, (_, values) => {
+                  const candidates = values.split(",").map(value => value.trim().replace(/^\/(?!\/)/, base + "/"));
+                  return 'srcset="' + candidates.join(", ") + '"';
+                })
                 .replace(absoluteCssUrl, (_, quote, url) => "url(" + quote + base + url + quote + ")");
+              if (file === "contacto/index.html") {
+                const submit = '<button type="submit" class="button button--primary">Enviar solicitud</button>';
+                if (!content.includes('action="/api/cotizacion.php"') || !content.includes(submit)) {
+                  throw new Error("Revisar el formulario de la vista previa estática.");
+                }
+                content = content
+                  .replace('action="/api/cotizacion.php"', 'action="#solicitud"')
+                  .replace(submit, '<button type="submit" class="button button--primary" disabled>Enviar solicitud</button>')
+                  .replace("Usaremos tus datos para responder a esta solicitud.", "En esta vista de revisión puedes solicitar una cotización por WhatsApp o correo.");
+              }
             } else if (file.endsWith(".css")) {
               content = content.toString("utf8").replace(absoluteCssUrl, (_, quote, url) => {
                 const relative = posix.relative(posix.dirname(file), url.slice(1));
