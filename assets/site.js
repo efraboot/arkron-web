@@ -208,6 +208,56 @@
     }
   }
 
+  for (const method of document.querySelectorAll('[data-about-method]')) {
+    const tablist = method.querySelector('.about-method-tabs');
+    const tabs = [...tablist.querySelectorAll('button')];
+    const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+    const compact = window.matchMedia('(max-width: 670px)');
+
+    function select(index) {
+      tabs.forEach((tab, i) => {
+        const selected = i === index;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        panels[i].hidden = !selected;
+      });
+    }
+
+    function setOrientation() {
+      tablist.setAttribute('aria-orientation', compact.matches ? 'horizontal' : 'vertical');
+    }
+
+    tablist.setAttribute('role', 'tablist');
+    setOrientation();
+    compact.addEventListener('change', setOrientation);
+    tabs.forEach((tab, i) => {
+      tab.setAttribute('role', 'tab');
+      panels[i].setAttribute('role', 'tabpanel');
+      panels[i].setAttribute('aria-labelledby', tab.id);
+      panels[i].tabIndex = 0;
+      tab.addEventListener('click', () => select(i));
+    });
+    tablist.addEventListener('keydown', event => {
+      const index = tabs.indexOf(event.target);
+      if (index < 0) return;
+      const previous = compact.matches ? 'ArrowLeft' : 'ArrowUp';
+      const next = compact.matches ? 'ArrowRight' : 'ArrowDown';
+      let target;
+      if (event.key === previous) target = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === next) target = (index + 1) % tabs.length;
+      else if (event.key === 'Home') target = 0;
+      else if (event.key === 'End') target = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      select(target);
+      tabs[target].focus();
+    });
+    const linkedStage = panels.findIndex(panel => window.location.hash === `#${panel.id}`);
+    select(Math.max(0, linkedStage));
+    tablist.hidden = false;
+    method.classList.add('is-interactive');
+  }
+
   const cards = [...document.querySelectorAll('[data-family-card]')];
   const jumps = [...document.querySelectorAll('[data-jump]')];
   if (cards.length && 'IntersectionObserver' in window) {
