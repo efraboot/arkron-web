@@ -238,7 +238,10 @@
     const linkedCategory = parameters.get('categoria');
     let category = !isBrands && buttons.some(button => button.dataset.filter === linkedCategory) ? linkedCategory : 'all';
     let exactBrand = isBrands ? items.find(item => item.dataset.id === parameters.get('marca')) : null;
-    if (exactBrand) field.value = exactBrand.querySelector('h3').textContent;
+    if (exactBrand) {
+      field.value = exactBrand.dataset.brandName;
+      exactBrand.open = true;
+    }
     const groups = isBrands ? null : JSON.parse(catalog.dataset.brandGroups);
     let maker = groups && Object.hasOwn(groups, parameters.get('marca')) ? groups[parameters.get('marca')] : null;
 
@@ -357,7 +360,7 @@
         if (sent) form.reset();
       } catch {
         message.dataset.state = 'error';
-        message.textContent = 'No pudimos confirmar el envío. Puedes escribirnos por WhatsApp o a info@arkron.com.';
+        message.textContent = 'No pudimos confirmar el envío. Puedes escribirnos por WhatsApp o a info@arkron.net.';
       } finally {
         form.removeAttribute('aria-busy');
         submit.disabled = false;

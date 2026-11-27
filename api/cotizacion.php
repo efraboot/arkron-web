@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-const INBOX = 'info@arkron.com';
+const INBOX = 'info@arkron.net';
 const SUCCESS = 'Solicitud enviada. El equipo de Arkron se pondrá en contacto contigo.';
-const UNAVAILABLE = 'No pudimos enviar la solicitud. Escríbenos por WhatsApp o a info@arkron.com.';
+const UNAVAILABLE = 'No pudimos enviar la solicitud. Escríbenos por WhatsApp o a ' . INBOX . '.';
 
 function respond(int $status, string $message): void
 {
