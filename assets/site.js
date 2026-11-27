@@ -227,7 +227,6 @@
       tablist.setAttribute('aria-orientation', compact.matches ? 'horizontal' : 'vertical');
     }
 
-    tablist.setAttribute('role', 'tablist');
     setOrientation();
     compact.addEventListener('change', setOrientation);
     tabs.forEach((tab, i) => {
